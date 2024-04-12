@@ -18,8 +18,7 @@ Basic Software to manage timesheets and payrolls.
 
 ## Technologies Used:
 - Django
-- React
-- Typescript
+- React w/ Typescript
 - Tailwindcss
 - D3
 - openpyxl
