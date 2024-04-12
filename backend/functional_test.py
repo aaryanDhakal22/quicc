@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from datetime import datetime
 import pytz
+import time
 
 
 class EmployeeClockTest(unittest.TestCase):
@@ -36,9 +37,10 @@ class EmployeeClockTest(unittest.TestCase):
 
         # She sees that she is just an employee and needs to work harder to be the manager
         login_badge_type = self.browser.find_element(By.ID, "login-type")
-        self.assertEqual(login_badge_type.lower(), "employee")
+        self.assertEqual(login_badge_type.text, "Employee")
 
         # She sees the time on the clock
+        time.sleep(1)
         us_time_clock = self.browser.find_element(By.ID, "us-clock")
         self.assertEqual(us_time_clock.text, datetime.now().strftime("%I:%M %p"))
         ph_time_clock = self.browser.find_element(By.ID, "ph-clock")

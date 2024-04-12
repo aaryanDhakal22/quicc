@@ -1,0 +1,25 @@
+
+<div id="login-name">{{ username }}</div>
+<div id="login-type">{{ role }}</div>
+
+<p id="us-clock">Loading...</p>
+<p id="ph-clock">Loading...</p>
+
+<button>Clock In</button>
+
+<a href  = "{% url 'logout' %}"><input type="button" value="LogOut"></a>
+
+<script>
+    function updateTime(timezone, placeholderId) {
+        var currentTime = new Date().toLocaleString('en-US', {timeZone: timezone});
+        var options = { hour: '2-digit', minute: '2-digit', hour12: true };
+        var formattedTime = new Date(currentTime).toLocaleTimeString(undefined, options).toUpperCase();
+        document.getElementById(placeholderId).innerHTML = formattedTime;
+    }
+    updateTime('America/New_York', 'us-clock'); 
+    updateTime('Asia/Manila', 'ph-clock'); 
+    setInterval(function() {
+        updateTime('America/New_York', 'us-clock'); 
+        updateTime('Asia/Manila', 'ph-clock');
+    }, 1000);
+</script>
