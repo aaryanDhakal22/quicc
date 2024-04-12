@@ -1,6 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-
-# Create your models here.
-class Staff(models.Model):
-    text = models.CharField(max_length=10)
+class User(AbstractUser):
+    is_manager = models.BooleanField(default=False)
+    is_employee = models.BooleanField(default=True)
+    
