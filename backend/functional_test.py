@@ -9,17 +9,16 @@ import pytz
 class EmployeeClockTest(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.browser = webdriver.Firefox
-        self.browser.implicitly_wait(2)
+        self.browser = webdriver.Firefox()
 
-    def tearDown(self) -> None:
+    def tearDown(self):
         self.browser.quit()
 
     def test_can_login(self):
         USER_NAME = "alisha"
 
         # Alisha opens the website ready to start the day
-        browser.get("https://localhost:8000")
+        self.browser.get("http://localhost:8000")
 
         # She puts in her username and password
         username_box = self.browser.find_element(By.ID, "username")
@@ -72,9 +71,5 @@ class EmployeeClockTest(unittest.TestCase):
     # She chooses what organization she is clocking in for and clocks in
 
 
-browser = webdriver.Firefox()
-browser.get("http://localhost:8000")
-
-
 if __name__ == "__main__":  #
-    unittest.main(warnings="ignore")  #
+    unittest.main()
