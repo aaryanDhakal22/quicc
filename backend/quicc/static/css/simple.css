@@ -1,0 +1,5 @@
+/* add a way to invert the colors of the homepage to dark mode  */
+body {
+    background-color: #343a40;
+    color: #f8f9fa;
+}

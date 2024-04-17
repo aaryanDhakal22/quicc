@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -56,7 +57,7 @@ ROOT_URLCONF = "quicc.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -118,6 +119,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+# Step 5: Managing Static Files in Production
+# For a production setup, you'll need to configure how static files are served. This often involves collecting all static files into a single directory using the collectstatic command and then serving them through a web server like Nginx or via a cloud service.
+
+# Collect Static Files:
+# Before deploying, run python manage.py collectstatic from your command line. This will collect all static files into the STATIC_ROOT directory, which you need to define in your settings.py:
+# python
+# Copy code
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Configure Production Web Server:
+# Configure your production web server to serve the files in STATIC_ROOT at the URL defined by STATIC_URL.
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
