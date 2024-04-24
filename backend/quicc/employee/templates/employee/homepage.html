@@ -9,10 +9,16 @@
 <p id="us-clock">Loading...</p>
 <p id="ph-clock">Loading...</p>
 
-<button id="punch-btn">Clock In</button>
+<form action="{% url 'toggle_clock' username=username %}" method="post">
+    {% csrf_token %}
+    <button type="submit" id='punch-btn'>{{ clocked_in }}</button>
+</form>
 
-<a href  = "{% url 'logout' %}"><input type="button" value="LogOut"></a>
-
+<a href  = "{% url 'logout' %}"><input type="button" id="logout-btn" value="LogOut"></a>
+<!-- add a clock-in table and a clock-out table -->
+<div id="clock-in-table">
+    
+</div>
 <script>
     function updateTime(timezone, placeholderId) {
         var currentTime = new Date().toLocaleString('en-US', {timeZone: timezone});

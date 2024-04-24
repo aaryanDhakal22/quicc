@@ -13,7 +13,18 @@ class EmployeeClockTest(unittest.TestCase):
         self.browser = webdriver.Firefox()
 
     def tearDown(self):
+        try:
+            punch_btn = self.browser.find_element(By.ID, "punch-btn")
+            self.assertEqual(punch_btn.text, "Clock Out")
+            punch_btn.click()
+        except:
+            print("No logout button")
         self.browser.quit()
+
+    def check_for_row_in_table(self, table_name, row_text):
+        log_table = self.browser.find_element(By.ID, table_name)
+        rows = log_table.find_elements(By.TAG_NAME, "tr")
+        self.assertIn(row_text, [row.text for row in rows])
 
     def test_can_login(self):
         USER_NAME = "alisha"
@@ -52,16 +63,42 @@ class EmployeeClockTest(unittest.TestCase):
         # She sees the clock in button
         punch_btn = self.browser.find_element(By.ID, "punch-btn")
         self.assertEqual(punch_btn.text, "Clock In")
+
         # She clocks in
+        clock_in_time = datetime.now().strftime("%I:%M:%S %p")
         punch_btn.click()
+
         # She watches the clock in button change to clock out button
+        punch_btn = self.browser.find_element(By.ID, "punch-btn")
         self.assertEqual(punch_btn.text, "Clock Out")
 
-        # Maybe add feature to disable button for accidental double press
+        # She sees the time that she clocked in at
+        self.check_for_row_in_table("clock-in-table", clock_in_time)
 
-        # She is greeted with a message
-        self.assertEqual(self.browser.find_element(By.ID, "welcome-msg"), "Welcome!")
+        # She then clocks out after a few hours
+        time.sleep(4)
+        clock_out_time = datetime.now().strftime("%I:%M:%S %p")
+        punch_btn.click()
+        logout_btn = self.browser.find_element(By.ID, "logout-btn")
+        logout_btn.click()
 
+        # At the end of the day she sees her logs for the day
+
+        # She puts in her username and password
+        username_box = self.browser.find_element(By.ID, "username")
+        username_box.send_keys(USER_NAME)
+        password_box = self.browser.find_element(By.ID, "password")
+        password_box.send_keys("admin")
+
+        # Presses the login button to login to the website
+        login_btn = self.browser.find_element(By.ID, "login-btn")
+        login_btn.click()
+        self.check_for_row_in_table("clock-in-table", clock_in_time)
+        self.check_for_row_in_table("clock-out-table", clock_out_time)
+
+        # She logs out of the system
+        logout_btn = self.browser.find_element(By.ID, "logout-btn")
+        logout_btn.click()
         self.fail("Finish the test")
 
     # def test_can_see_prev_logs(self):
