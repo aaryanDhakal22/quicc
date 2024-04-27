@@ -2,6 +2,7 @@
 {% block title %}Homepage{% endblock %}
 
 {% block content %}
+<!-- Test if the person viewing this is authenticated -->
 
 <div id="login-name">{{ username }}</div>
 <div id="login-type">{{ role }}</div>
@@ -17,6 +18,9 @@
 <a href  = "{% url 'logout' %}"><input type="button" id="logout-btn" value="LogOut"></a>
 <!-- add a clock-in table and a clock-out table -->
 <div id="clock-in-table">
+    
+</div>
+<div id="clock-out-table">
     
 </div>
 <script>

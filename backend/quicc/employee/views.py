@@ -4,6 +4,8 @@ from login.models import User
 
 # Create your views here.
 def employee_home_page(req):
+    if not req.user.is_authenticated:
+        return redirect("/")
     username = req.user.username
     role = req.user.role
     clocked_in = req.user.is_clocked_in
