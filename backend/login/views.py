@@ -38,7 +38,7 @@ def login(req):
                 response = redirect("/manager/")
             return response
         else:
-            return render(req, "login/login_page.html")
+            return HttpResponse("Login Successfull")
 
 
 def logout_view(req):
